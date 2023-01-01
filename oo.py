@@ -7,6 +7,7 @@ class Student:
         self.last_name = last_name
         self.address = address
 
+
 class Question:
     """Create Question objects containing a question and its correct answer"""
 
@@ -43,8 +44,19 @@ class Exam:
         score = 100 * (tally / len(self.questions))
         return score
 
-class StudentExam:
 
+class Quiz(Exam):
+    """subclass of exam, where score is modified for pass/fail"""    
+    def administer(self):
+        score = super().administer()
+        if score >= 60.0:
+            return 1
+        else:
+            return 0
+
+
+class StudentExam:
+    """object is a student exam, exam + method for administration"""
     score = 0
 
     def __init__(self, student, exam):
@@ -52,10 +64,26 @@ class StudentExam:
         self.exam = exam
     
     def take_test(self):
+        """uses the administer method to run and score the exam"""
         self.score = self.exam.administer()
 
+
+class StudentQuiz:
+    """object is a student quiz, quiz subclass of exam + method for administration"""
+    score = 0
+
+    def __init__(self, student, quiz):
+        self.student = student
+        self.quiz = quiz
+    
+    def take_test(self):
+        """uses the administer method to run and score the exam"""
+        self.score = self.quiz.administer()
+
+
 def example():
-    first_exam = Exam('First Exam')
+    """creates a working student exam"""
+    first_exam = Quiz('First Exam')
     alberta_capital = Question('What is the capital of Alberta?', 'Edmonton')
     first_exam.add_question(alberta_capital)
     python_author = Question('Who is the author of Python?', 'Guido Van Rossum')
@@ -69,7 +97,7 @@ def example():
 
     june = Student('June', 'Adam', '2023 Still here again')
 
-    student_exam_1 = StudentExam(june, first_exam)
+    student_exam_1 = StudentQuiz(june, first_exam)
 
     student_exam_1.take_test()
 
