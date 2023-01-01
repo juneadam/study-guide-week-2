@@ -14,6 +14,14 @@ class Question:
         self.question = question
         self.correct_answer = correct_answer
 
+    def ask_and_answer(self):
+        response = input(self.question)
+        if response == self.correct_answer:
+            return True
+        else:
+            return False
+
+
 class Exam:
     """Create Exam objects, containing a name and a list of Question objects"""
 
@@ -23,4 +31,16 @@ class Exam:
         self.name = name
 
     def add_question(self, Question_obj):
+        """Method to add individual question to the exam."""
         self.questions.append(Question_obj)
+    
+    def administer(self):
+        tally = 0
+        for question in self.questions:
+            if question.ask_and_answer():
+                tally += 1
+        
+        score = 100 * (tally / len(self.questions))
+        print(f'Your final score is {score}')
+
+        
