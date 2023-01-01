@@ -41,6 +41,42 @@ class Exam:
                 tally += 1
         
         score = 100 * (tally / len(self.questions))
-        print(f'Your final score is {score}')
+        return score
 
-        
+class StudentExam:
+
+    score = 0
+
+    def __init__(self, student, exam):
+        self.student = student
+        self.exam = exam
+    
+    def take_test(self):
+        self.score = self.exam.administer()
+
+def example():
+    first_exam = Exam('First Exam')
+    alberta_capital = Question('What is the capital of Alberta?', 'Edmonton')
+    first_exam.add_question(alberta_capital)
+    python_author = Question('Who is the author of Python?', 'Guido Van Rossum')
+    first_exam.add_question(python_author)
+    set_q = Question('What is the method for adding an element to a set?', '.add()')
+    first_exam.add_question(set_q)
+    pwd_q = Question('What does pwd stand for?', 'print working directory')
+    first_exam.add_question(pwd_q)
+    list_q = Question('Python lists are mutable, iterable, and what?', 'ordered')
+    first_exam.add_question(list_q)
+
+    june = Student('June', 'Adam', '2023 Still here again')
+
+    student_exam_1 = StudentExam(june, first_exam)
+
+    student_exam_1.take_test()
+
+    print(student_exam_1.score)
+
+example()
+
+
+
+
