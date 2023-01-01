@@ -83,7 +83,9 @@ def find_unique_common_items(items1, items2):
         [2]
     """
 
-    return set()
+    items1_set = set(items1)
+    items2_set = set(items2)
+    return items1_set & items2_set
 
 
 def get_sum_zero_pairs(numbers):
@@ -113,8 +115,26 @@ def get_sum_zero_pairs(numbers):
         [[-1, 1], [0, 0]]
     """
 
-    return []
+    zero_pairs = []
+    zero_pairs_set = set()
 
+    for i in range(0, len(numbers) - 1):
+        for number in numbers:
+            if numbers[i] + number == 0:
+                pair = sorted([numbers[i], number])
+                zero_pairs.append(tuple(pair))
+    
+    zero_pairs_set = set(zero_pairs)
+    output = list(zero_pairs_set)
+
+    # for number in numbers:
+    #     for index in range (0, len(numbers)):
+    #         if number + numbers[index] == 0:
+    #             zero_pairs.append(sorted((number, numbers[index])))
+    
+    # zero_pairs_set = set(zero_pairs)
+
+    return output
 
 def top_chars(phrase):
     """Find most common character(s) in string.
@@ -141,7 +161,29 @@ def top_chars(phrase):
 
     """
 
-    return []
+    most_common_char = []
+    letter_dictionary = {}
+    number_count = 0
+
+    for letter in phrase:
+        if letter_dictionary.get(letter, 0) == 0:
+            letter_dictionary[letter] = 1
+        elif letter_dictionary.get(letter, 0) != 0:
+            letter_dictionary[letter] += 1
+
+    del letter_dictionary[' ']
+
+    for count_value in letter_dictionary.values():
+        if count_value > number_count:
+            number_count = count_value
+
+    for letter, number in letter_dictionary.items():
+        if number == number_count:
+            most_common_char.append(letter)
+    
+    most_common_char.sort()
+
+    return most_common_char
 
 #####################################################################
 # You can ignore everything below this.
